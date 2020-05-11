@@ -1,0 +1,5 @@
+{
+    "board": "esp32:esp32:esp32wrover",
+    "port": "COM2",
+    "configuration": "PartitionScheme=default,FlashMode=qio,FlashFreq=80,UploadSpeed=921600,DebugLevel=none"
+}

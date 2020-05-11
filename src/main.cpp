@@ -62,6 +62,7 @@ float f0;
 int value;
 int sensorPin = 32; //no usar pines asociados al grabado de memoria como el pin 15 ->HS2_CMD 14 ->HS2_CLK / pin2 conectado a pin0
 int sensorValue = 0;
+
 const int PIN_AP = 15;
 
 float Vout = 0;
@@ -851,6 +852,7 @@ void loop(void)
   offset = sum / 20;
   float temp_cal = 0;
   float hum_cal = 0;
+ 
   /*
 
   int x = 0;
@@ -956,8 +958,8 @@ void loop(void)
   delay(1000);
   while (1)
   {
-
-    int u = 0;
+    int c = 0; //variable auxiliar para grabar en SPIFFS
+    int u = 0; //variable auxiliar asociada a cálculo de offset
     float IFA = 0;
     float sum2 = 0;
     float IFA2 = 0;
@@ -1108,16 +1110,20 @@ void loop(void)
         SPIFFS.begin();
       }
       delay(50);
-      File sourceFile = SD.open("/data.txt");
-      File destFile = SPIFFS.open("/data.txt", FILE_WRITE);
-      static uint8_t buf[512];
-      while (sourceFile.read(buf, 512))
-      {
-        destFile.write(buf, 512);
+      if (c==0){
+        delay(50);
+        File sourceFile = SD.open("/data.txt");
+        File destFile = SPIFFS.open("/data.txt", FILE_WRITE);
+        static uint8_t buf[512];
+        while (sourceFile.read(buf, 512))
+        {
+          destFile.write(buf, 512);
       }
       destFile.close();
       sourceFile.close();
       delay(50);
+      c=1;
+    }
     }
   }
 }
