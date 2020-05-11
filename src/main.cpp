@@ -1122,7 +1122,7 @@ void loop(void)
       destFile.close();
       sourceFile.close();
       delay(50);
-      c=1;
+      c=1; //var aux
     }
     }
   }
